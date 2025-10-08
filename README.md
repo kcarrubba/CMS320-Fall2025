@@ -1,4 +1,4 @@
-# CMS395-Fall2023  
+# CMS320-Fall2025  
 
 **Group Name:** KEK (Kaley, Ethan, Kate)
 
