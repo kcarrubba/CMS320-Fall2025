@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
             if (s == null)
                 continue;
 
-            if (s.isLoaded && s.name != newScene.name && s.name != "Bootstrapper")
+            if (s.isLoaded && s.name != newScene.name && s.name != "GameManager")
                 yield return SceneManager.UnloadSceneAsync(s);
         }
     }
