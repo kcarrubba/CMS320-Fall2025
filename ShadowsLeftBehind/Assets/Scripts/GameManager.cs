@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    public static GameManager instance;
 
     private void Awake()
     {
@@ -20,7 +20,13 @@ public class GameManager : MonoBehaviour
     //load the main menu first
     private void Start()
     {
-        StartCoroutine(LoadAndActivate("MainMenu"));
+        const string initalScene = "MainMenu";
+        var s = SceneManager.GetSceneByName(initalScene);
+
+        if (!s.isLoaded)
+            StartCoroutine(LoadAndActivate(initalScene));
+        else
+            SceneManager.SetActiveScene(s);
     }
 
     public void SwitchTo(string sceneName)
@@ -44,7 +50,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
-    private IEnumerator SwitchRoutine(string nextScene)
+    public IEnumerator SwitchRoutine(string nextScene)
     {
         var load = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
 
