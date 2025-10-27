@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -15,6 +17,15 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        //load 1 eventsystem for all scenes
+        if (EventSystem.current == null)
+        {
+            var eventSystem = new GameObject("EventSystem", typeof(EventSystem));
+            DontDestroyOnLoad(eventSystem);
+
+            eventSystem.AddComponent<InputSystemUIInputModule>();
+        }
     }
 
     //load the main menu first
