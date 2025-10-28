@@ -6,6 +6,6 @@ public class SceneButton : MonoBehaviour
     public void LoadScene()
     {
         GameManager.instance.SwitchTo(targetScene);
-        print("pressed scene!");
+        //print("pressed scene!");
     }
 }
