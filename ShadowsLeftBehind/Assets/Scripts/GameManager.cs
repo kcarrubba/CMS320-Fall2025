@@ -31,13 +31,27 @@ public class GameManager : MonoBehaviour
     //load the main menu first
     private void Start()
     {
-        const string initalScene = "MainMenu";
-        var s = SceneManager.GetSceneByName(initalScene);
+        //unload any scenes we were debugging
+        this.UnloadAllScenes();
 
-        if (!s.isLoaded)
-            StartCoroutine(LoadAndActivate(initalScene));
+        var initalScene = SceneManager.GetSceneByName("MainMenu");
+
+        if (!initalScene.isLoaded)
+            StartCoroutine(LoadAndActivate("MainMenu"));
         else
-            SceneManager.SetActiveScene(s);
+            SceneManager.SetActiveScene(initalScene);
+    }
+
+    private void UnloadAllScenes()
+    {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.isLoaded && scene.name != "GameManager")
+            {
+                SceneManager.UnloadSceneAsync(scene);
+            }
+        }
     }
 
     public void SwitchTo(string sceneName)
