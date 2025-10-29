@@ -7,8 +7,12 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Camera cam;
     Vector2 halfSize;
+    public Animator animator; 
+
     void Awake()
     {
+        if (animator == null) animator = GetComponent<Animator>();
+
         this.rb = GetComponent<Rigidbody2D>();
         this.rb.gravityScale = 0f;
         this.rb.freezeRotation = true;
@@ -33,6 +37,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (animator != null) animator.SetBool("isRunning", isMoving);
+
         Vector2 dir = Vector2.zero;
         var keyboard = Keyboard.current;
 
