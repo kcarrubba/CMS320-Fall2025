@@ -3,10 +3,15 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
+using System.Linq;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [SerializeField] GameObject playerPrefab;
+
+    GameObject player;
+    string pendingSpawnId = "default";
     private void Awake()
     {
         if (instance != null)
@@ -25,6 +30,15 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(eventSystem);
 
             eventSystem.AddComponent<InputSystemUIInputModule>();
+        }
+
+        //create the player instance (for all scenes)
+        if (player == null && playerPrefab != null)
+        {
+            player = Instantiate(playerPrefab);
+            DontDestroyOnLoad(player);
+
+            SceneManager.MoveGameObjectToScene(player, gameObject.scene);
         }
     }
 
@@ -54,9 +68,47 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SwitchTo(string sceneName)
+    public void SwitchTo(string sceneName, string spawnId = "default")
     {
+        pendingSpawnId = spawnId;
         StartCoroutine(SwitchRoutine(sceneName));
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    //callback
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (player == null) 
+            return;
+
+        var spawns = Object.FindObjectsByType<SpawnPoint>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None
+        );
+
+        if (spawns == null || spawns.Length == 0) 
+            return;
+
+        var target =
+            spawns.FirstOrDefault(s => s.id == pendingSpawnId) ??
+            spawns.FirstOrDefault(s => s.id == "default") ??
+            spawns.First();
+
+        player.transform.position = target.transform.position;
+
+        //face the sprite the correct way
+        var pc = player.GetComponent<PlayerController>();
+
+        if (pc) 
+            pc.Face(target.facingDirection);
     }
 
     private IEnumerator LoadAndActivate(string sceneName)

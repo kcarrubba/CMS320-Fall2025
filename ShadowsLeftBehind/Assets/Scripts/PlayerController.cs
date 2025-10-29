@@ -20,6 +20,17 @@ public class PlayerController : MonoBehaviour
             this.halfSize = collider.bounds.extents;
     }
 
+    public void Face(Vector2 dir)
+    {
+        if (dir == Vector2.zero) 
+            return;
+
+        var sr = GetComponentInChildren<SpriteRenderer>();
+
+        if (sr)
+            sr.flipX = dir.x < 0f;
+    }
+
     void FixedUpdate()
     {
         Vector2 dir = Vector2.zero;
