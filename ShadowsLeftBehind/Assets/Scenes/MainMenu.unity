@@ -308,7 +308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 443630711}
   m_Layer: 5
-  m_Name: BGM_Player
+  m_Name: Music Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,7 +383,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ed96ce95d487d4ab5983b0ddd7adcac2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.563
   m_Pitch: 1
   Loop: 1
   Mute: 0
