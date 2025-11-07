@@ -25,7 +25,7 @@ public class InteractableEntity : MonoBehaviour
 
         playerInside = true;
         player = other.transform;
-        Overlay.Instance.ShowPrompt(promptText, transform.position + promptWorldOffset);
+        //Overlay.Instance.ShowPrompt(promptText, transform.position + promptWorldOffset);
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -36,6 +36,7 @@ public class InteractableEntity : MonoBehaviour
         playerInside = false;
         player = null;
         Overlay.Instance.HidePrompt();
+        Overlay.Instance.HidePopup();
     }
 
     void Update()

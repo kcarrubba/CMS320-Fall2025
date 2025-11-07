@@ -8,6 +8,7 @@ public class Overlay : MonoBehaviour
 
     //one of these with no art
     [SerializeField] Image popupImage;
+    [SerializeField] Image backgroundImage;
     [SerializeField] TextMeshProUGUI promptLabel;
 
     Camera cam;
@@ -20,6 +21,7 @@ public class Overlay : MonoBehaviour
             return;
         }
 
+        backgroundImage.gameObject.SetActive(false);
         Instance = this;
         DontDestroyOnLoad(gameObject);
         cam = Camera.main;
@@ -55,6 +57,8 @@ public class Overlay : MonoBehaviour
     {
         popupImage.sprite = s;
         popupImage.gameObject.SetActive(true);
+        backgroundImage.gameObject.SetActive(true);
+
         UpdatePopupPosition(worldPos + worldOffset);
     }
 
@@ -73,5 +77,6 @@ public class Overlay : MonoBehaviour
     public void HidePopup()
     {
         popupImage.gameObject.SetActive(false);
+        backgroundImage.gameObject.SetActive(false);
     }
 }
