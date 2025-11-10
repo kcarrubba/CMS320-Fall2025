@@ -22,6 +22,18 @@ public class InteractableEntity : MonoBehaviour
             collider.isTrigger = true;
     }
 
+    void MarkAsDiscovered()
+    {
+        if (!bDiscovered)
+        {
+            bDiscovered = true;
+
+            //tell the manager this one is now discovered
+            if (InteractablesManager.Instance != null)
+                InteractablesManager.Instance.OnInteractableDiscovered(this);
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("player"))
@@ -45,6 +57,7 @@ public class InteractableEntity : MonoBehaviour
         if (Overlay.Instance != null)
         {
             //Overlay.Instance.HidePrompt();
+            this.MarkAsDiscovered();
             Overlay.Instance.HidePopup();
         }
     }
@@ -60,20 +73,12 @@ public class InteractableEntity : MonoBehaviour
         {
             if (Overlay.Instance.IsPopupVisible)
             {
+                this.MarkAsDiscovered();
                 Overlay.Instance.HidePopup();
                 //Overlay.Instance.ShowPrompt(promptText, transform.position + promptWorldOffset);
             }
             else
             {
-                if (!bDiscovered)
-                {
-                    bDiscovered = true;
-
-                    //tell the manager this one is now discovered
-                    if (InteractablesManager.Instance != null)
-                        InteractablesManager.Instance.OnInteractableDiscovered(this);
-                }
-
                 //Overlay.Instance.HidePrompt();
                 Overlay.Instance.ShowPopup(popupSprite);
             }
