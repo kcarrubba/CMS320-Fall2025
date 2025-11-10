@@ -1,17 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class Overlay : MonoBehaviour
 {
     public static Overlay Instance { get; private set; }
 
-    [SerializeField] CanvasGroup popupCanvasGroup;
+
+    [Header("Popup")]
+    [SerializeField] CanvasGroup popupCanvasGroup;   // assign PopupRoot here
     [SerializeField] Image popupImage;
     [SerializeField] Image backgroundImage;
+    [SerializeField] float popupFadeDuration = 0.20f;
+
+    [Header("Prompt")]
     [SerializeField] TextMeshProUGUI promptLabel;
 
     Camera cam;
+    Coroutine popupFadeRoutine;
 
     void Awake()
     {
@@ -72,14 +79,16 @@ public class Overlay : MonoBehaviour
 
     public void ShowPopup(Sprite s)
     {
-        if (popupImage == null || backgroundImage == null)
+        if (popupImage == null || backgroundImage == null || popupCanvasGroup == null)
             return;
 
         popupImage.sprite = s;
-        popupImage.gameObject.SetActive(true);
+
         backgroundImage.gameObject.SetActive(true);
+        popupImage.gameObject.SetActive(true);
 
         CenterPopup();
+        StartPopupFade(1f);
     }
 
     void CenterPopup()
@@ -95,10 +104,54 @@ public class Overlay : MonoBehaviour
 
     public void HidePopup()
     {
-        if (popupImage != null)
-            popupImage.gameObject.SetActive(false);
+        if (popupCanvasGroup == null)
+        {
+            if (popupImage != null)
+                popupImage.gameObject.SetActive(false);
+            if (backgroundImage != null)
+                backgroundImage.gameObject.SetActive(false);
+            return;
+        }
 
-        if (backgroundImage != null)
-            backgroundImage.gameObject.SetActive(false);
+        StartPopupFade(0f);
+    }
+
+    void StartPopupFade(float targetAlpha)
+    {
+        if (popupFadeRoutine != null)
+            StopCoroutine(popupFadeRoutine);
+
+        popupFadeRoutine = StartCoroutine(FadeCanvasGroup(popupCanvasGroup, targetAlpha));
+    }
+
+    IEnumerator FadeCanvasGroup(CanvasGroup cg, float target)
+    {
+        float start = cg.alpha;
+        float time = 0f;
+
+        while (time < popupFadeDuration)
+        {
+            time += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(time / popupFadeDuration);
+            cg.alpha = Mathf.Lerp(start, target, t);
+            yield return null;
+        }
+
+        cg.alpha = target;
+
+        if (Mathf.Approximately(target, 0f))
+        {
+            if (popupImage != null)
+                popupImage.gameObject.SetActive(false);
+            if (backgroundImage != null)
+                backgroundImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            if (popupImage != null)
+                popupImage.gameObject.SetActive(true);
+            if (backgroundImage != null)
+                backgroundImage.gameObject.SetActive(true);
+        }
     }
 }
