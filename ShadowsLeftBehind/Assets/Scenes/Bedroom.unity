@@ -1014,7 +1014,15 @@ PrefabInstance:
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupSprite
       value: 
-      objectReference: {fileID: -311621117010658485, guid: 1deac67f36be34589b620587b110cdf2, type: 3}
+      objectReference: {fileID: 1717959649996741340, guid: 2671904c060ea47c78a7e2f6effc730b, type: 3}
+    - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
+      propertyPath: popupWorldOffset.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
+      propertyPath: popupWorldOffset.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 464017636002813208, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.91
@@ -1054,6 +1062,10 @@ PrefabInstance:
     - target: {fileID: 464017636002813208, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563621928281657903, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8461268864249074082, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: m_Name
@@ -1302,7 +1314,7 @@ PrefabInstance:
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupSprite
       value: 
-      objectReference: {fileID: 1832933773464449174, guid: 7ec8a731a0bf84aa6a27f434542890a6, type: 3}
+      objectReference: {fileID: -2661080757978602275, guid: 0f0a78615820a4ffa8c1d4767b89f9b5, type: 3}
     - target: {fileID: 464017636002813208, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.61
@@ -1426,11 +1438,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5563621928281657903, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: m_Size.y
-      value: 0.36
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: 5563621928281657903, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: m_Offset.y
-      value: -0.06
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8461268864249074082, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: m_Name

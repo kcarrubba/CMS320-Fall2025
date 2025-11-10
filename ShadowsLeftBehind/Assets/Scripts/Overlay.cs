@@ -6,7 +6,6 @@ public class Overlay : MonoBehaviour
 {
     public static Overlay Instance { get; private set; }
 
-    //one of these with no art
     [SerializeField] Image popupImage;
     [SerializeField] Image backgroundImage;
     [SerializeField] TextMeshProUGUI promptLabel;
@@ -16,14 +15,23 @@ public class Overlay : MonoBehaviour
     void Awake()
     {
         if (Instance != null)
-        { 
+        {
             Destroy(gameObject);
             return;
         }
 
-        backgroundImage.gameObject.SetActive(false);
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (backgroundImage != null)
+            backgroundImage.gameObject.SetActive(false);
+
+        if (popupImage != null)
+            popupImage.gameObject.SetActive(false);
+
+        if (promptLabel != null)
+            promptLabel.gameObject.SetActive(false);
+
         cam = Camera.main;
     }
 
@@ -32,8 +40,12 @@ public class Overlay : MonoBehaviour
         if (cam == null) cam = Camera.main;
     }
 
+    // ===== WORLD-SPACE PROMPT (stays above object) =====
+
     public void ShowPrompt(string text, Vector3 worldPos)
     {
+        if (promptLabel == null) return;
+
         promptLabel.text = text;
         promptLabel.gameObject.SetActive(true);
         UpdatePromptPosition(worldPos);
@@ -51,32 +63,43 @@ public class Overlay : MonoBehaviour
         promptLabel.rectTransform.position = screen;
     }
 
-    public void HidePrompt() => promptLabel.gameObject.SetActive(false);
-
-    public void ShowPopup(Sprite s, Vector3 worldPos, Vector3 worldOffset)
+    public void HidePrompt()
     {
+        if (promptLabel != null)
+            promptLabel.gameObject.SetActive(false);
+    }
+
+    // ===== SCREEN-CENTER POPUP (NOT world-relative) =====
+
+    public void ShowPopup(Sprite s)
+    {
+        if (popupImage == null || backgroundImage == null)
+            return;
+
         popupImage.sprite = s;
         popupImage.gameObject.SetActive(true);
         backgroundImage.gameObject.SetActive(true);
 
-        UpdatePopupPosition(worldPos + worldOffset);
+        CenterPopup();
     }
 
-    public void UpdatePopupPosition(Vector3 worldPos)
+    void CenterPopup()
     {
-        if (!popupImage.gameObject.activeSelf)
-            return;
+        var rt = popupImage.rectTransform;
 
-        if (cam == null)
-            cam = Camera.main;
-
-        Vector3 screen = RectTransformUtility.WorldToScreenPoint(cam, worldPos);
-        popupImage.rectTransform.position = screen;
+        // force it to be centered in the canvas
+        rt.anchorMin = new Vector2(0.5f, 0.5f);
+        rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchoredPosition = Vector2.zero;
     }
 
     public void HidePopup()
     {
-        popupImage.gameObject.SetActive(false);
-        backgroundImage.gameObject.SetActive(false);
+        if (popupImage != null)
+            popupImage.gameObject.SetActive(false);
+
+        if (backgroundImage != null)
+            backgroundImage.gameObject.SetActive(false);
     }
 }
