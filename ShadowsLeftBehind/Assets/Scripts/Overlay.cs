@@ -9,7 +9,7 @@ public class Overlay : MonoBehaviour
 
 
     [Header("Popup")]
-    [SerializeField] CanvasGroup popupCanvasGroup;   // assign PopupRoot here
+    [SerializeField] CanvasGroup popupCanvasGroup;
     [SerializeField] Image popupImage;
     [SerializeField] Image backgroundImage;
     [SerializeField] float popupFadeDuration = 0.20f;
@@ -44,6 +44,9 @@ public class Overlay : MonoBehaviour
             promptLabel.gameObject.SetActive(false);
 
         cam = Camera.main;
+
+        if (popupCanvasGroup != null)
+            popupCanvasGroup.alpha = 0f;
     }
 
     void OnEnable()
