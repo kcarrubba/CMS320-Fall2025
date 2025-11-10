@@ -6,6 +6,7 @@ public class Overlay : MonoBehaviour
 {
     public static Overlay Instance { get; private set; }
 
+    [SerializeField] CanvasGroup popupCanvasGroup;
     [SerializeField] Image popupImage;
     [SerializeField] Image backgroundImage;
     [SerializeField] TextMeshProUGUI promptLabel;
