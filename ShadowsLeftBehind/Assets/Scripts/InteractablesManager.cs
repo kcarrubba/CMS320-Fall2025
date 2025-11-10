@@ -37,8 +37,8 @@ public class InteractablesManager : MonoBehaviour
 
             if (discovered.Count == allInteractables.Length)
             {
-                //Overlay.Instance.sh
                 Debug.Log("All clues discovered!");
+                Overlay.Instance.ShowButton();
                 //move scene button here from game manager ui button script
             }
         }

@@ -17,6 +17,9 @@ public class Overlay : MonoBehaviour
     [Header("Prompt")]
     [SerializeField] TextMeshProUGUI promptLabel;
 
+    [Header("Scene")]
+    [SerializeField] Button sceneSwitchButton;
+
     Camera cam;
     Coroutine popupFadeRoutine;
 
@@ -57,6 +60,22 @@ public class Overlay : MonoBehaviour
         promptLabel.text = text;
         promptLabel.gameObject.SetActive(true);
         UpdatePromptPosition(worldPos);
+    }
+
+    public void ShowButton()
+    {
+        if (sceneSwitchButton == null)
+            return;
+
+        sceneSwitchButton.gameObject.SetActive(true);
+    }
+
+    public void HideButton()
+    {
+        if (sceneSwitchButton == null)
+            return;
+
+        sceneSwitchButton.gameObject.SetActive(false);
     }
 
     public void UpdatePromptPosition(Vector3 worldPos)

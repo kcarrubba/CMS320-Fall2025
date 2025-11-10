@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
     {
         pendingSpawnId = spawnId;
         StartCoroutine(SwitchRoutine(sceneName));
+
+        Overlay.Instance.HideButton();
     }
 
     private void OnEnable()
