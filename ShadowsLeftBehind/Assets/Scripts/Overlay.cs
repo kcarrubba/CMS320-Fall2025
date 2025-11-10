@@ -40,7 +40,7 @@ public class Overlay : MonoBehaviour
         if (cam == null) cam = Camera.main;
     }
 
-    // ===== WORLD-SPACE PROMPT (stays above object) =====
+    public bool IsPopupVisible => popupImage != null && popupImage.gameObject.activeSelf;
 
     public void ShowPrompt(string text, Vector3 worldPos)
     {
@@ -68,8 +68,6 @@ public class Overlay : MonoBehaviour
         if (promptLabel != null)
             promptLabel.gameObject.SetActive(false);
     }
-
-    // ===== SCREEN-CENTER POPUP (NOT world-relative) =====
 
     public void ShowPopup(Sprite s)
     {

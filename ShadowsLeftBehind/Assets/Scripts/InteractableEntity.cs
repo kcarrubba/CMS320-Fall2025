@@ -55,8 +55,16 @@ public class InteractableEntity : MonoBehaviour
 
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            //Overlay.Instance.HidePrompt();
-            Overlay.Instance.ShowPopup(popupSprite);
+            if (Overlay.Instance.IsPopupVisible)
+            {
+                Overlay.Instance.HidePopup();
+                //Overlay.Instance.ShowPrompt(promptText, transform.position + promptWorldOffset);
+            }
+            else
+            {
+                //Overlay.Instance.HidePrompt();
+                Overlay.Instance.ShowPopup(popupSprite);
+            }
         }
     }
 }
