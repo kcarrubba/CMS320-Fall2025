@@ -9,7 +9,10 @@ public class InteractableEntity : MonoBehaviour
     public Vector3 promptWorldOffset = new Vector3(0f, 1.2f, 0f);
 
     bool playerInside;
+    bool bDiscovered = false;
     Transform player;
+
+    public bool IsDiscovered => bDiscovered;
 
     void Reset()
     {
@@ -62,6 +65,15 @@ public class InteractableEntity : MonoBehaviour
             }
             else
             {
+                if (!bDiscovered)
+                {
+                    bDiscovered = true;
+
+                    //tell the manager this one is now discovered
+                    if (InteractablesManager.Instance != null)
+                        InteractablesManager.Instance.OnInteractableDiscovered(this);
+                }
+
                 //Overlay.Instance.HidePrompt();
                 Overlay.Instance.ShowPopup(popupSprite);
             }
