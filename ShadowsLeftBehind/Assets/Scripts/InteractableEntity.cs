@@ -14,6 +14,7 @@ public class InteractableEntity : MonoBehaviour
     void Reset()
     {
         var collider = GetComponent<BoxCollider2D>();
+
         if (collider != null)
             collider.isTrigger = true;
     }
@@ -26,8 +27,8 @@ public class InteractableEntity : MonoBehaviour
         playerInside = true;
         player = other.transform;
 
-        if (Overlay.Instance != null)
-            Overlay.Instance.ShowPrompt(promptText, transform.position + promptWorldOffset);
+        //if (Overlay.Instance != null)
+        //    Overlay.Instance.ShowPrompt(promptText, transform.position + promptWorldOffset);
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -40,7 +41,7 @@ public class InteractableEntity : MonoBehaviour
 
         if (Overlay.Instance != null)
         {
-            Overlay.Instance.HidePrompt();
+            //Overlay.Instance.HidePrompt();
             Overlay.Instance.HidePopup();
         }
     }
@@ -50,13 +51,11 @@ public class InteractableEntity : MonoBehaviour
         if (!playerInside || Overlay.Instance == null)
             return;
 
-        // keep prompt above this object
-        Overlay.Instance.UpdatePromptPosition(transform.position + promptWorldOffset);
+        //Overlay.Instance.UpdatePromptPosition(transform.position + promptWorldOffset);
 
-        // E to show centered popup
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            Overlay.Instance.HidePrompt();
+            //Overlay.Instance.HidePrompt();
             Overlay.Instance.ShowPopup(popupSprite);
         }
     }
