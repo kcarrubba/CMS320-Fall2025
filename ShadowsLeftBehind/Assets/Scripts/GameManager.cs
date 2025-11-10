@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
 
     GameObject player;
     string pendingSpawnId = "default";
+    string pendingSceneForMove = null;
+    bool shouldMovePlayerOnNextLoad = true;
+
     private void Awake()
     {
         if (instance != null)
@@ -68,13 +71,33 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SwitchTo(string sceneName, string spawnId = "default")
+    public void SwitchTo(string sceneName, bool movePlayer = true, string spawnId = "default")
     {
         pendingSpawnId = spawnId;
+
+        if (movePlayer)
+        {
+            shouldMovePlayerOnNextLoad = true;
+            pendingSceneForMove = sceneName;
+
+            if (player != null && !player.activeSelf)
+                player.SetActive(true);
+        }
+        else
+        {
+            shouldMovePlayerOnNextLoad = false;
+            pendingSceneForMove = null;
+
+            if (player != null)
+                player.SetActive(false);
+        }
+
         StartCoroutine(SwitchRoutine(sceneName));
 
-        Overlay.Instance.HideButton();
+        if (Overlay.Instance != null)
+            Overlay.Instance.HideButton();
     }
+
 
     private void OnEnable()
     {
@@ -88,13 +111,22 @@ public class GameManager : MonoBehaviour
     //callback
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (!shouldMovePlayerOnNextLoad)
+            return;
+
+        if (pendingSceneForMove == null || scene.name != pendingSceneForMove)
+            return;
+
         if (player == null) 
             return;
+
+        shouldMovePlayerOnNextLoad = false;
+        pendingSceneForMove = null;
 
         var spawns = Object.FindObjectsByType<SpawnPoint>(
             FindObjectsInactive.Include,
             FindObjectsSortMode.None
-        );
+        ).Where(s => s.gameObject.scene == scene).ToArray();
 
         if (spawns == null || spawns.Length == 0) 
             return;
