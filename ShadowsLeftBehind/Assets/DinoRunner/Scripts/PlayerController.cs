@@ -37,6 +37,21 @@ namespace DinoRunner {
 		// Use this for initialization
 		void Start () {	
 			genomes = Utils.loadAllGenomes();
+			// DEBUG: make it obvious why dino is invisible
+			sprites = Resources.LoadAll<Sprite>("Art/Player/Standing");
+			crouchingSprites = Resources.LoadAll<Sprite>("Art/Player/Crouching");
+
+			if (sprites == null || sprites.Length == 0)
+				Debug.LogError("Standing sprites not found at Resources/Art/Player/Standing");
+			if (crouchingSprites == null || crouchingSprites.Length == 0)
+				Debug.LogError("Crouching sprites not found at Resources/Art/Player/Crouching");
+
+			var sr = GetComponent<SpriteRenderer>();
+			if (sr == null)
+				Debug.LogError("No SpriteRenderer on the Player object.");
+			else if (sr.color.a < 0.99f)
+				sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f); // ensure not transparent
+
 			GetComponent<BoxCollider2D> ().enabled = false;
 
 			isLearning = (genomes.Count < 4);
