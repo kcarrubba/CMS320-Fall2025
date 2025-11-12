@@ -7,7 +7,7 @@ public class HallwayGameManager : MonoBehaviour {
     void Awake(){ I = this; Time.timeScale = 1f; }
     public void GameOver(){
         if (!alive) return;
-        alive = false;
+        alive = true;
         Time.timeScale = 0f;
         Debug.Log("Game Over - Press R to restart");
     }
