@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9fac40e49bacb490d889210d29b6f655
+guid: edf0e6dc9e0e04ce7a7ff2da968c350e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7507908744243251546
-    second: Kate (2)_0
+      213: 8988782547088701427
+    second: Hallway Background - DARK_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Kate (2)_0
+      name: Hallway Background - DARK_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6a6f45596cc8ec790800000000000000
-      internalID: -7507908744243251546
+      spriteID: 3f7f37a1a129ebc70800000000000000
+      internalID: 8988782547088701427
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Kate (2)_0: -7507908744243251546
+      Hallway Background - DARK_0: 8988782547088701427
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
