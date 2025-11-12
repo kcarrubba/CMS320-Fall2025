@@ -814,7 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneButton
   targetScene: Level 1
-  movePlayer: 1
+  movePlayer: 0
 --- !u!114 &1944066531
 MonoBehaviour:
   m_ObjectHideFlags: 0
