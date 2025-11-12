@@ -814,6 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneButton
   targetScene: HallwayRunner
+  movePlayer: 0
 --- !u!114 &1944066531
 MonoBehaviour:
   m_ObjectHideFlags: 0
