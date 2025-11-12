@@ -813,7 +813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3b218e4d4b37c4448ce5980ff108650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneButton
-  targetScene: HallwayRunner
+  targetScene: Level 1
   movePlayer: 0
 --- !u!114 &1944066531
 MonoBehaviour:
