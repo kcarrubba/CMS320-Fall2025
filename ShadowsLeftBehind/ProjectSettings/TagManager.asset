@@ -44,5 +44,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1529527991
+    locked: 0
+  - name: Puzzle
+    uniqueID: 1685847929
+    locked: 0
+  - name: UI
+    uniqueID: 730227805
+    locked: 0
   m_RenderingLayers:
   - Default
