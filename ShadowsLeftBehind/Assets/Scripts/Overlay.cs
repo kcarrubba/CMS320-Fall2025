@@ -12,6 +12,7 @@ public class Overlay : MonoBehaviour
     [SerializeField] CanvasGroup popupCanvasGroup;
     [SerializeField] Image popupImage;
     [SerializeField] Image backgroundImage;
+    [SerializeField] Image introImage;
     [SerializeField] float popupFadeDuration = 0.20f;
 
     [Header("Prompt")]
@@ -35,7 +36,10 @@ public class Overlay : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         if (backgroundImage != null)
-            backgroundImage.gameObject.SetActive(false);
+            backgroundImage.gameObject.SetActive(true);
+
+        if (introImage != null)
+            introImage.gameObject.SetActive(true);
 
         if (popupImage != null)
             popupImage.gameObject.SetActive(false);
@@ -79,6 +83,14 @@ public class Overlay : MonoBehaviour
             return;
 
         sceneSwitchButton.gameObject.SetActive(false);
+    }
+
+    public void HideIntroImage()
+    {
+        if (introImage == null)
+            return;
+
+        introImage.gameObject.SetActive(false);
     }
 
     public void UpdatePromptPosition(Vector3 worldPos)
