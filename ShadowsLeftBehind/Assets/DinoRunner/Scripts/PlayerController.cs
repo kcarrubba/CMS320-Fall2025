@@ -9,6 +9,12 @@ namespace DinoRunner {
 	[Serializable]
 	public class PlayerController : MonoBehaviour {
 		
+		[Serializable]
+		private struct ObstacleNameMapping {
+			public string name;
+			public int typeId;
+		}
+
 		private float moveSpeed = 4.0f;
 		private float jumpHeight = 10.0f;
 
@@ -30,6 +36,13 @@ namespace DinoRunner {
 
 		[SerializeField]
 		private bool lockGroundY = true;
+
+		[SerializeField]
+		private ObstacleNameMapping[] obstacleNameMappings = new ObstacleNameMapping[] {
+			new ObstacleNameMapping { name = "Boxes", typeId = 1 },
+			new ObstacleNameMapping { name = "Laundry", typeId = 2 },
+			new ObstacleNameMapping { name = "Cat", typeId = 3 }
+		};
 
 		private SpriteRenderer spriteRenderer;
 		private Rigidbody2D rb;
@@ -121,21 +134,9 @@ namespace DinoRunner {
 			//Load Cactus
 			foreach(GameObject c in GameObject.FindGameObjectsWithTag("cactus"))
 			{			
-				int cacType;
-				switch (c.name) {
-					case "cactus_1":
-						cacType = 1;
-						break;
-					case "cactus_2":
-						cacType = 2;
-						break;
-					case "cactus_3":
-						cacType = 3;
-						break;
-					default:
-						cacType = 1;
-						break;
-				}
+				string normalizedName = NormalizeObstacleName(c.name);
+				int cacType = ResolveObstacleType(normalizedName);
+
 				Cactus toAdd = new Cactus () {
 					type = cacType,
 					position = c.transform.position
@@ -227,7 +228,7 @@ namespace DinoRunner {
 
 		// Called when a collision happens
 		void OnCollisionEnter2D(Collision2D coll) {
-			if (coll.gameObject.name.StartsWith ("cactus")) {			
+			if (coll.gameObject.CompareTag("cactus")) {			
 				GameObject.Find ("Canvas").GetComponent<Canvas> ().enabled = true;
 				Time.timeScale = 0;
 
@@ -262,6 +263,32 @@ namespace DinoRunner {
 				pos.y = groundY;
 				transform.position = pos;
 			}
+		}
+
+		private string NormalizeObstacleName(string objectName) {
+			if (string.IsNullOrEmpty(objectName)) {
+				return string.Empty;
+			}
+
+			const string cloneSuffix = "(Clone)";
+			int cloneIndex = objectName.IndexOf(cloneSuffix, StringComparison.Ordinal);
+			if (cloneIndex >= 0) {
+				objectName = objectName.Substring(0, cloneIndex);
+			}
+
+			return objectName.Trim();
+		}
+
+		private int ResolveObstacleType(string normalizedName) {
+			if (obstacleNameMappings != null) {
+				foreach (ObstacleNameMapping mapping in obstacleNameMappings) {
+					if (!string.IsNullOrEmpty(mapping.name) && string.Equals(mapping.name.Trim(), normalizedName, StringComparison.OrdinalIgnoreCase)) {
+						return mapping.typeId <= 0 ? 1 : mapping.typeId;
+					}
+				}
+			}
+
+			return 1;
 		}
 
 		private Sprite[] LoadAnimationFrames(string resourcePath, string[] preferredNames) {

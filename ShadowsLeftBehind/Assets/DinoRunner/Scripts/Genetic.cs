@@ -8,7 +8,19 @@ public class Genetic
 
 	public static int calculateFitness(List<Jumped> jumps, List<Cactus> cactus) {
 		int jumpedCactus = 0;
-		Cactus nextCactus = cactus.Find(c => c.position.x == GameObject.Find("cactus_1_first").transform.position.x);
+		Cactus nextCactus = null;
+		if (cactus != null && cactus.Count > 0) {
+			nextCactus = cactus[0];
+			for (int i = 1; i < cactus.Count; i++) {
+				if (cactus[i].position.x < nextCactus.position.x) {
+					nextCactus = cactus[i];
+				}
+			}
+		}
+
+		if (nextCactus == null) {
+			return jumpedCactus;
+		}
 
 		foreach (Jumped jump in jumps) {	
 			if (nextCactus != jump.nearestCactus) {
