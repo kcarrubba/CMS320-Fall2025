@@ -4147,7 +4147,7 @@ GameObject:
   - component: {fileID: 732440240}
   - component: {fileID: 732440239}
   m_Layer: 0
-  m_Name: cactus_2 (1)
+  m_Name: introToMiniGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4162,8 +4162,8 @@ Transform:
   m_GameObject: {fileID: 732440237}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.7206, y: 0.8676, z: 10}
-  m_LocalScale: {x: 0.27261636, y: 0.24092695, z: 0.1554875}
+  m_LocalPosition: {x: 6.4107, y: 1.0565, z: 10}
+  m_LocalScale: {x: 0.38977593, y: 0.34475502, z: 0.1554875}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 654068513}
@@ -4206,7 +4206,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 19.2, y: 10.8}
+    oldSize: {x: 11.78, y: 7}
     newSize: {x: 0.32, y: 0.33}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
