@@ -39,9 +39,9 @@ namespace DinoRunner {
 
 		[SerializeField]
 		private ObstacleNameMapping[] obstacleNameMappings = new ObstacleNameMapping[] {
-			new ObstacleNameMapping { name = "Boxes", typeId = 1 },
-			new ObstacleNameMapping { name = "Laundry", typeId = 2 },
-			new ObstacleNameMapping { name = "Cat", typeId = 3 }
+			new ObstacleNameMapping { name = "Boxes_0", typeId = 1 },
+			new ObstacleNameMapping { name = "Laundry_0", typeId = 2 },
+			new ObstacleNameMapping { name = "Cat_0", typeId = 3 }
 		};
 
 		private SpriteRenderer spriteRenderer;

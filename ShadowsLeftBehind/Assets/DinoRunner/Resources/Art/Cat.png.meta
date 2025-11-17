@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a3b76884252be4a4b81f0050370e65fd
+guid: 2a0f37b13381c4aa5a167c0aaacacdbc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3476192708383499638
-    second: Laundry_0
+      213: -7232521027535748977
+    second: Cat_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Laundry_0
+      name: Cat_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 88
-        width: 925
-        height: 785
+        x: 49
+        y: 33
+        width: 836
+        height: 525
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a8a9ffd362512cfc0800000000000000
-      internalID: -3476192708383499638
+      spriteID: f80403be17ce0ab90800000000000000
+      internalID: -7232521027535748977
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Laundry_0: -3476192708383499638
+      Cat_0: -7232521027535748977
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
