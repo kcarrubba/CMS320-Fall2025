@@ -9,13 +9,30 @@ namespace DinoRunner {
 	[Serializable]
 	public class PlayerController : MonoBehaviour {
 		
-		private float moveSpeed = 6.0f;
+		private float moveSpeed = 4.0f;
 		private float jumpHeight = 10.0f;
 
+		private const float AnimationFrameDuration = 0.1f;
+		private float spriteTimer = AnimationFrameDuration;
 		private int actualSprite = 0;
-		private float spriteInterval = 0.1f;
-		private Sprite[] sprites = new Sprite[2];
-		private Sprite[] crouchingSprites = new Sprite[2];
+		private Sprite[] standingAnimationFrames;
+		private Sprite[] crouchingAnimationFrames;
+		private Sprite[] currentAnimationFrames;
+
+		[SerializeField]
+		private string[] standingSpriteNames = new[] { "walk1", "walk2" };
+
+		[SerializeField]
+		private string[] crouchingSpriteNames = new[] { "Crouch", "Crouch2" };
+
+		[SerializeField]
+		private float groundY = 0.09f;
+
+		[SerializeField]
+		private bool lockGroundY = true;
+
+		private SpriteRenderer spriteRenderer;
+		private Rigidbody2D rb;
 
 		private String genomeBasePath = "Genomes/genome_";
 
@@ -36,25 +53,41 @@ namespace DinoRunner {
 
 		// Use this for initialization
 		void Start () {	
+			rb = GetComponent<Rigidbody2D>();
+			if (rb == null) {
+				Debug.LogError("No Rigidbody2D on the Player object.");
+			}
+
+			spriteRenderer = GetComponent<SpriteRenderer>();
+			if (spriteRenderer == null) {
+				Debug.LogError("No SpriteRenderer on the Player object.");
+			} else if (spriteRenderer.color.a < 0.99f) {
+				spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f); // ensure not transparent
+			}
+
+			if (lockGroundY) {
+				SnapToGroundY();
+			}
+
 			genomes = Utils.loadAllGenomes();
 			// DEBUG: make it obvious why dino is invisible
-			sprites = Resources.LoadAll<Sprite>("Art/Player/Standing");
-			crouchingSprites = Resources.LoadAll<Sprite>("Art/Player/Crouching");
+			standingAnimationFrames = LoadAnimationFrames("Art/Player/Standing", standingSpriteNames);
+			crouchingAnimationFrames = LoadAnimationFrames("Art/Player/Crouching", crouchingSpriteNames);
+			currentAnimationFrames = standingAnimationFrames;
 
-			if (sprites == null || sprites.Length == 0)
-				Debug.LogError("Standing sprites not found at Resources/Art/Player/Standing");
-			if (crouchingSprites == null || crouchingSprites.Length == 0)
-				Debug.LogError("Crouching sprites not found at Resources/Art/Player/Crouching");
-
-			var sr = GetComponent<SpriteRenderer>();
-			if (sr == null)
-				Debug.LogError("No SpriteRenderer on the Player object.");
-			else if (sr.color.a < 0.99f)
-				sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f); // ensure not transparent
+			if ((standingAnimationFrames == null || standingAnimationFrames.Length == 0) && spriteRenderer != null) {
+				Debug.LogError("Standing sprites not found at Resources/Art/Player/Standing. Player will stay invisible.");
+			}
+			if (crouchingAnimationFrames == null || crouchingAnimationFrames.Length == 0) {
+				Debug.LogError("Crouching sprites not found at Resources/Art/Player/Crouching.");
+			}
+			if (currentAnimationFrames != null && currentAnimationFrames.Length > 0 && spriteRenderer != null) {
+				spriteRenderer.sprite = currentAnimationFrames[0];
+			}
 
 			GetComponent<BoxCollider2D> ().enabled = false;
 
-			isLearning = (genomes.Count < 4);
+			isLearning = true;   // always manual control for now
 			if (!isLearning && Utils.actualGenome >= genomes.Count) {
 				print ("Acabou de jogar os genomas");
 				Utils.clearCrossOversFolder();
@@ -83,9 +116,6 @@ namespace DinoRunner {
 				genomes = Utils.loadAllGenomes ();
 				Utils.actualGenome = 0;
 			}
-			sprites = Resources.LoadAll<Sprite> ("Art/Player/Standing");
-			crouchingSprites = Resources.LoadAll<Sprite> ("Art/Player/Crouching");
-
 			GameObject.Find ("Canvas").GetComponent<Canvas> ().enabled = false;
 
 			//Load Cactus
@@ -116,18 +146,18 @@ namespace DinoRunner {
 		
 		// Update is called once per frame
 		void Update () {		
-			spriteInterval -= Time.deltaTime;
-			if (spriteInterval < 0) {
-				spriteInterval = 0.1f;
-				if (isCrouching) {				
-					GetComponent<SpriteRenderer> ().sprite = crouchingSprites [actualSprite];
-				} else {
-					GetComponent<SpriteRenderer> ().sprite = sprites [actualSprite];
-				}
-				actualSprite = 1 - actualSprite;
+			if (rb == null) {
+				rb = GetComponent<Rigidbody2D>();
 			}
 
-			GetComponent<Rigidbody2D> ().linearVelocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().linearVelocity.y);
+			UpdateAnimationState();
+
+			if (rb != null) {
+				rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
+				if (lockGroundY && isGrounded) {
+					SnapToGroundY();
+				}
+			}
 
 			if (isLearning) {
 				if (Input.GetKeyUp (KeyCode.DownArrow)) {
@@ -140,17 +170,22 @@ namespace DinoRunner {
 					isCrouching = false;
 					GetComponent<PolygonCollider2D> ().enabled = true;
 					GetComponent<BoxCollider2D> ().enabled = false;
+					
+					if (rb != null) {
+						rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpHeight);
+					}
 
-					GetComponent<Rigidbody2D> ().linearVelocity = new Vector2 (GetComponent<Rigidbody2D> ().linearVelocity.x, jumpHeight);
 					isGrounded = false;
 
 					Cactus c = getNextNearestCactus ();
-					Jumped jump = new Jumped {
-						nearestCactus = c,
-						distanceToNearestCactus = c.position - GetComponent<Rigidbody2D> ().position
-					};
+					if (c != null) {
+						Jumped jump = new Jumped {
+							nearestCactus = c,
+							distanceToNearestCactus = c.position - (rb != null ? rb.position : Vector2.zero)
+						};
 
-					jumps.Add (jump);
+						jumps.Add (jump);
+					}
 				} else if (isGrounded && !isCrouching && Input.GetKeyDown (KeyCode.DownArrow)) {
 					isCrouching = true;
 					GetComponent<BoxCollider2D> ().enabled = true;
@@ -162,6 +197,31 @@ namespace DinoRunner {
 						playGenome(Utils.actualGenome);	
 					}					
 				}
+			}
+		}
+
+		private void UpdateAnimationState() {
+			if (spriteRenderer == null) {
+				return;
+			}
+
+			Sprite[] targetAnimation = isCrouching ? crouchingAnimationFrames : standingAnimationFrames;
+			if (targetAnimation == null || targetAnimation.Length == 0) {
+				return;
+			}
+
+			if (!ReferenceEquals(targetAnimation, currentAnimationFrames)) {
+				currentAnimationFrames = targetAnimation;
+				actualSprite = 0;
+				spriteRenderer.sprite = currentAnimationFrames[actualSprite];
+				spriteTimer = AnimationFrameDuration;
+			}
+
+			spriteTimer -= Time.deltaTime;
+			if (spriteTimer <= 0f && currentAnimationFrames.Length > 0) {
+				spriteTimer = AnimationFrameDuration;
+				actualSprite = (actualSprite + 1) % currentAnimationFrames.Length;
+				spriteRenderer.sprite = currentAnimationFrames[actualSprite];
 			}
 		}
 
@@ -187,7 +247,58 @@ namespace DinoRunner {
 				}				
 			} else if (coll.gameObject.name.StartsWith ("Ground")) {
 				isGrounded = true;
+				if (lockGroundY) {
+					SnapToGroundY();
+				}
 			}
+		}
+
+		private void SnapToGroundY() {
+			if (rb != null) {
+				rb.position = new Vector2(rb.position.x, groundY);
+				transform.position = rb.position;
+			} else {
+				Vector2 pos = transform.position;
+				pos.y = groundY;
+				transform.position = pos;
+			}
+		}
+
+		private Sprite[] LoadAnimationFrames(string resourcePath, string[] preferredNames) {
+			List<Sprite> frames = new List<Sprite>();
+
+			if (preferredNames != null && preferredNames.Length > 0) {
+				foreach (string preferredName in preferredNames) {
+					string trimmedName = preferredName != null ? preferredName.Trim() : string.Empty;
+					if (string.IsNullOrEmpty(trimmedName)) {
+						continue;
+					}
+
+					Sprite sprite = Resources.Load<Sprite> ($"{resourcePath}/{trimmedName}");
+					if (sprite != null) {
+						frames.Add(sprite);
+					} else {
+						Debug.LogWarning($"Sprite '{trimmedName}' not found at Resources/{resourcePath}.");
+					}
+				}
+			}
+
+			if (frames.Count == 0) {
+				Sprite[] fallback = Resources.LoadAll<Sprite>(resourcePath);
+				if (fallback != null && fallback.Length > 0) {
+					Array.Sort(fallback, (left, right) => string.CompareOrdinal(
+						left != null ? left.name : string.Empty,
+						right != null ? right.name : string.Empty));
+
+					foreach (Sprite sprite in fallback) {
+						if (sprite != null) {
+							frames.Add(sprite);
+						}
+					}
+				}
+			}
+
+			return frames.ToArray();
 		}
 
 		Cactus getNextNearestCactus() {
@@ -196,7 +307,7 @@ namespace DinoRunner {
 			foreach(Cactus c in cactus)
 			{
 				float cacX = c.position.x;
-				float playerX = GetComponent<Rigidbody2D> ().position.x;
+				float playerX = rb != null ? rb.position.x : 0f;
 				if (cacX > playerX) {
 					float dist = cacX - playerX;
 					if (dist < nearestDist) {
@@ -210,17 +321,30 @@ namespace DinoRunner {
 		}
 
 		void playGenome(int genomeIndex) {
-			float dist = getNextNearestCactus().position.x - GetComponent<Rigidbody2D> ().position.x;
+			if (rb == null) {
+				rb = GetComponent<Rigidbody2D>();
+				if (rb == null) {
+					return;
+				}
+			}
+
+			Cactus nextCactus = getNextNearestCactus();
+			if (nextCactus == null) {
+				return;
+			}
+
+			float dist = nextCactus.position.x - rb.position.x;
 			if (actualJumpGenome >= genomes[genomeIndex].jumps.Count) {
 			}
 			else if (dist <= genomes[genomeIndex].jumps[actualJumpGenome].distanceToNearestCactus.x && isGrounded) {
-				GetComponent<Rigidbody2D> ().linearVelocity = new Vector2 (GetComponent<Rigidbody2D> ().linearVelocity.x, jumpHeight);
+				rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpHeight);
+
 				isGrounded = false;
 
-				Cactus c = getNextNearestCactus ();
+				Cactus c = nextCactus;
 				Jumped jump = new Jumped {
 					nearestCactus = c,
-					distanceToNearestCactus = c.position - GetComponent<Rigidbody2D> ().position
+					distanceToNearestCactus = c.position - rb.position
 				};
 
 				jumps.Add (jump);
