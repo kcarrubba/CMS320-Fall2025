@@ -9,7 +9,22 @@ public class Door : MonoBehaviour
     [SerializeField] string spawnId = "default";
     [SerializeField] bool movePlayer = true;
 
+    [Header("Visuals")]
+    [SerializeField] SpriteRenderer doorSprite;
+    [SerializeField] Collider2D triggerCollider;
+
     bool playerInside;
+    bool isUnlocked = false;
+
+    private void Awake()
+    {
+        if (triggerCollider == null)
+            triggerCollider = GetComponent<Collider2D>();
+        if (doorSprite == null)
+            doorSprite = GetComponent<SpriteRenderer>();
+
+        SetUnlocked(false);
+    }
 
     void Reset()
     {
@@ -21,24 +36,32 @@ public class Door : MonoBehaviour
         col.isTrigger = true;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void SetUnlocked(bool unlocked)
     {
-        if (!other.CompareTag("player"))
-            return;
+        isUnlocked = unlocked;
 
-        playerInside = true;
-    }
+        if (doorSprite != null)
+            doorSprite.enabled = unlocked;
 
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (!other.CompareTag("player"))
-            return;
-
-        playerInside = false;
+        if (triggerCollider != null)
+            triggerCollider.enabled = unlocked;
     }
 
     void Update()
     {
+        if (!isUnlocked)
+        {
+            if (InteractablesManager.Instance != null &&
+                InteractablesManager.Instance.AllCluesFoundInScene)
+            {
+                SetUnlocked(true);
+            }
+            else
+            {
+                return;
+            }
+        }
+
         if (!playerInside)
             return;
 
@@ -58,5 +81,21 @@ public class Door : MonoBehaviour
 
             GameManager.instance.SwitchTo(targetScene, movePlayer, spawnId);
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("player"))
+            return;
+
+        playerInside = true;
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (!other.CompareTag("player"))
+            return;
+
+        playerInside = false;
     }
 }

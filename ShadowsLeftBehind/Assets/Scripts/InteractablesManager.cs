@@ -10,6 +10,7 @@ public class InteractablesManager : MonoBehaviour
     InteractableEntity[] allInteractables; //we fill this from script
     HashSet<InteractableEntity> discovered = new HashSet<InteractableEntity>();
     int TotalClues => allInteractables != null ? allInteractables.Length : 0;
+    public bool AllCluesFoundInScene => TotalClues > 0 && discovered.Count >= TotalClues;
 
     void Awake()
     {
