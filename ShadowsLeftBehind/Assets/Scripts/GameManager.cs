@@ -98,9 +98,6 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(SwitchRoutine(sceneName));
-
-        if (Overlay.Instance != null)
-            Overlay.Instance.HideButton();
     }
 
     private void OnEnable()

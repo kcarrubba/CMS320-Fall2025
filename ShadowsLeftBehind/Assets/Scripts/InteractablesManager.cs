@@ -63,8 +63,6 @@ public class InteractablesManager : MonoBehaviour
                 Overlay.Instance.UpdateClues(0, TotalClues);
             else
                 Overlay.Instance.ResetClues();
-
-            Overlay.Instance.HideButton();
         }
     }
 
@@ -89,7 +87,6 @@ public class InteractablesManager : MonoBehaviour
             if (discovered.Count == TotalClues && TotalClues > 0)
             {
                 Debug.Log("All clues discovered!");
-                Overlay.Instance.ShowButton();
                 //move scene button here from game manager ui button script
             }
         }
