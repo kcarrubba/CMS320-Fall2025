@@ -45,32 +45,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //load the main menu first
     private void Start()
     {
-        //unload any scenes we were debugging
-        this.UnloadAllScenes();
-
-        string initalSceneName = "MainMenu";
-
-        var initalScene = SceneManager.GetSceneByName(initalSceneName);
-
-        if (!initalScene.isLoaded)
-            StartCoroutine(LoadAndActivate(initalSceneName));
-        else
-            SceneManager.SetActiveScene(initalScene);
+        StartCoroutine(Bootstrap());
     }
 
-    private void UnloadAllScenes()
+    private IEnumerator Bootstrap()
     {
+        var toUnload = new System.Collections.Generic.List<Scene>();
+
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
             var scene = SceneManager.GetSceneAt(i);
             if (scene.isLoaded && scene.name != "GameManager")
             {
-                SceneManager.UnloadSceneAsync(scene);
+                toUnload.Add(scene);
             }
         }
+
+        foreach (var s in toUnload)
+        {
+            var op = SceneManager.UnloadSceneAsync(s);
+            if (op != null)
+            {
+                while (!op.isDone)
+                    yield return null;
+            }
+        }
+
+        yield return LoadAndActivate("MainMenu");
     }
 
     public void SwitchTo(string sceneName, bool movePlayer = true, string spawnId = "default")
@@ -99,7 +102,6 @@ public class GameManager : MonoBehaviour
         if (Overlay.Instance != null)
             Overlay.Instance.HideButton();
     }
-
 
     private void OnEnable()
     {
