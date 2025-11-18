@@ -476,9 +476,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a682b1545379e46aad0b67e14f4e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  targetScene: Hallway
+  targetScene: Level 1
   spawnId: default
-  movePlayer: 1
+  movePlayer: 0
+  doorSprite: {fileID: 0}
+  triggerCollider: {fileID: 0}
 --- !u!61 &420781365
 BoxCollider2D:
   m_ObjectHideFlags: 0
