@@ -13,8 +13,15 @@ public class Door : MonoBehaviour
     [SerializeField] SpriteRenderer doorSprite;
     [SerializeField] Collider2D triggerCollider;
 
+    [Header("Glow Settings")]
+    [SerializeField] bool useGlow = true;
+    [Range(0f, 1f)] [SerializeField] float minAlpha = 0.3f;
+    [Range(0f, 1f)] [SerializeField] float maxAlpha = 1f;
+    [SerializeField] float glowSpeed = 2f;
+
     bool playerInside;
     bool isUnlocked = false;
+    float glowT;
 
     private void Awake()
     {
@@ -49,6 +56,7 @@ public class Door : MonoBehaviour
 
     void Update()
     {
+        // Unlock logic
         if (!isUnlocked)
         {
             if (InteractablesManager.Instance != null &&
@@ -60,6 +68,18 @@ public class Door : MonoBehaviour
             {
                 return;
             }
+        }
+
+        // Glow effect once the door is unlocked
+        if (useGlow && doorSprite != null && isUnlocked)
+        {
+            glowT += Time.deltaTime * glowSpeed;
+            float pingPong = (Mathf.Sin(glowT) + 1f) * 0.5f;   // 0 to 1
+            float alpha = Mathf.Lerp(minAlpha, maxAlpha, pingPong);
+
+            Color c = doorSprite.color;
+            c.a = alpha;
+            doorSprite.color = c;
         }
 
         if (!playerInside)
