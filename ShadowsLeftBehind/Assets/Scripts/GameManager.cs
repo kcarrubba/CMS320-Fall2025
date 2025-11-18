@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         //unload any scenes we were debugging
         this.UnloadAllScenes();
 
-        string initalSceneName = "Hallway";
+        string initalSceneName = "MainMenu";
 
         var initalScene = SceneManager.GetSceneByName(initalSceneName);
 

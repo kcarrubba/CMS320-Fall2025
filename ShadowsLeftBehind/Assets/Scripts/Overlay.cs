@@ -20,6 +20,7 @@ public class Overlay : MonoBehaviour
 
     [Header("Scene")]
     [SerializeField] Button sceneSwitchButton;
+    [SerializeField] TextMeshProUGUI interactedCount;
 
     Camera cam;
     Coroutine popupFadeRoutine;
@@ -47,6 +48,9 @@ public class Overlay : MonoBehaviour
         if (promptLabel != null)
             promptLabel.gameObject.SetActive(false);
 
+        if (interactedCount != null)
+            interactedCount.gameObject.SetActive(false);
+
         cam = Camera.main;
 
         if (popupCanvasGroup != null)
@@ -59,6 +63,23 @@ public class Overlay : MonoBehaviour
     }
 
     public bool IsPopupVisible => popupImage != null && popupImage.gameObject.activeSelf;
+
+    public void UpdateClues(int found, int total)
+    {
+        if (interactedCount == null)
+            return;
+
+        interactedCount.gameObject.SetActive(true);
+        interactedCount.text = $"Clues Found: {found}/{total}";
+    }
+    public void ResetClues()
+    {
+        if (interactedCount != null)
+        {
+            interactedCount.gameObject.SetActive(false);
+            interactedCount.text = string.Empty;
+        }
+    }
 
     public void ShowPrompt(string text, Vector3 worldPos)
     {
