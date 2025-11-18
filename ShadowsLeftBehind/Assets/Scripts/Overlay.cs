@@ -7,13 +7,16 @@ public class Overlay : MonoBehaviour
 {
     public static Overlay Instance { get; private set; }
 
-
     [Header("Popup")]
     [SerializeField] CanvasGroup popupCanvasGroup;
     [SerializeField] Image popupImage;
     [SerializeField] Image backgroundImage;
+    [SerializeField] float popupFadeDuration = 0.25f;
+
+    [Header("Intro")]
     [SerializeField] Image introImage;
-    [SerializeField] float popupFadeDuration = 0.20f;
+    [SerializeField] CanvasGroup introCanvasGroup;
+    [SerializeField] float introFadeDuration = 0.25f;
 
     [Header("Prompt")]
     [SerializeField] TextMeshProUGUI promptLabel;
@@ -23,7 +26,9 @@ public class Overlay : MonoBehaviour
     [SerializeField] TextMeshProUGUI interactedCount;
 
     Camera cam;
+
     Coroutine popupFadeRoutine;
+    Coroutine introFadeRoutine;
 
     void Awake()
     {
@@ -55,6 +60,9 @@ public class Overlay : MonoBehaviour
 
         if (popupCanvasGroup != null)
             popupCanvasGroup.alpha = 0f;
+
+        if (introCanvasGroup != null)
+            introCanvasGroup.alpha = 0f;
     }
 
     void OnEnable()
@@ -64,6 +72,15 @@ public class Overlay : MonoBehaviour
 
     public bool IsPopupVisible => popupImage != null && popupImage.gameObject.activeSelf;
 
+    void Start()
+    {
+        // Fade intro in at game start
+        if (introImage != null && introCanvasGroup != null)
+        {
+            introImage.gameObject.SetActive(true);
+            StartIntroFade(1f);
+        }
+    }
     public void UpdateClues(int found, int total)
     {
         if (interactedCount == null)
@@ -111,7 +128,10 @@ public class Overlay : MonoBehaviour
         if (introImage == null)
             return;
 
-        introImage.gameObject.SetActive(false);
+        if (introCanvasGroup != null)
+        {
+            StartIntroFade(0f);
+        }
     }
 
     public void UpdatePromptPosition(Vector3 worldPos)
@@ -174,40 +194,68 @@ public class Overlay : MonoBehaviour
 
     void StartPopupFade(float targetAlpha)
     {
+        if (popupCanvasGroup == null)
+            return;
+
         if (popupFadeRoutine != null)
             StopCoroutine(popupFadeRoutine);
 
-        popupFadeRoutine = StartCoroutine(FadeCanvasGroup(popupCanvasGroup, targetAlpha));
+        popupFadeRoutine = StartCoroutine(
+            FadeCanvasGroup(popupCanvasGroup, targetAlpha, popupFadeDuration,
+                onComplete: () =>
+                {
+                    if (Mathf.Approximately(targetAlpha, 0f))
+                    {
+                        if (popupImage != null)
+                            popupImage.gameObject.SetActive(false);
+                        if (backgroundImage != null)
+                            backgroundImage.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        if (popupImage != null)
+                            popupImage.gameObject.SetActive(true);
+                        if (backgroundImage != null)
+                            backgroundImage.gameObject.SetActive(true);
+                    }
+                })
+        );
     }
 
-    IEnumerator FadeCanvasGroup(CanvasGroup cg, float target)
+    void StartIntroFade(float targetAlpha)
+    {
+        if (introCanvasGroup == null)
+            return;
+
+        if (introFadeRoutine != null)
+            StopCoroutine(introFadeRoutine);
+
+        introFadeRoutine = StartCoroutine(
+            FadeCanvasGroup(introCanvasGroup, targetAlpha, introFadeDuration,
+                onComplete: () =>
+                {
+                    if (Mathf.Approximately(targetAlpha, 0f))
+                    {
+                        if (introImage != null)
+                            introImage.gameObject.SetActive(false);
+                    }
+                })
+        );
+    }
+    IEnumerator FadeCanvasGroup(CanvasGroup cg, float target, float duration, System.Action onComplete = null)
     {
         float start = cg.alpha;
         float time = 0f;
 
-        while (time < popupFadeDuration)
+        while (time < duration)
         {
             time += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(time / popupFadeDuration);
+            float t = Mathf.Clamp01(time / duration);
             cg.alpha = Mathf.Lerp(start, target, t);
             yield return null;
         }
 
         cg.alpha = target;
-
-        if (Mathf.Approximately(target, 0f))
-        {
-            if (popupImage != null)
-                popupImage.gameObject.SetActive(false);
-            if (backgroundImage != null)
-                backgroundImage.gameObject.SetActive(false);
-        }
-        else
-        {
-            if (popupImage != null)
-                popupImage.gameObject.SetActive(true);
-            if (backgroundImage != null)
-                backgroundImage.gameObject.SetActive(true);
-        }
+        onComplete?.Invoke();
     }
 }
