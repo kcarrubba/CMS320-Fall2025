@@ -31,8 +31,10 @@ namespace DinoRunner {
 		[SerializeField]
 		private string[] crouchingSpriteNames = new[] { "Crouch", "Crouch2" };
 
+		private const float ForcedGroundY = -2.3093f;
+
 		[SerializeField]
-		private float groundY = 0.09f;
+		private float groundY = ForcedGroundY;
 
 		[SerializeField]
 		private bool lockGroundY = true;
@@ -78,6 +80,7 @@ namespace DinoRunner {
 				spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f); // ensure not transparent
 			}
 
+			groundY = ForcedGroundY; // enforce canonical ground height regardless of inspector overrides
 			if (lockGroundY) {
 				SnapToGroundY();
 			}
