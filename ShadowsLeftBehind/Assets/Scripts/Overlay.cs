@@ -144,6 +144,7 @@ public class Overlay : MonoBehaviour
                 popupImage.gameObject.SetActive(false);
             if (backgroundImage != null)
                 backgroundImage.gameObject.SetActive(false);
+
             return;
         }
 

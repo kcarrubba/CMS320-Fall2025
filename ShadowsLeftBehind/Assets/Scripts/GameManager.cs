@@ -51,10 +51,12 @@ public class GameManager : MonoBehaviour
         //unload any scenes we were debugging
         this.UnloadAllScenes();
 
-        var initalScene = SceneManager.GetSceneByName("MainMenu");
+        string initalSceneName = "Hallway";
+
+        var initalScene = SceneManager.GetSceneByName(initalSceneName);
 
         if (!initalScene.isLoaded)
-            StartCoroutine(LoadAndActivate("MainMenu"));
+            StartCoroutine(LoadAndActivate(initalSceneName));
         else
             SceneManager.SetActiveScene(initalScene);
     }
