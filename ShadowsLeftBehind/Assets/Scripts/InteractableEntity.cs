@@ -10,6 +10,8 @@ public class InteractableEntity : MonoBehaviour
 
     bool playerInside;
     bool bDiscovered = false;
+    bool hasInteracted = false;
+
     Transform player;
 
     public bool IsDiscovered => bDiscovered;
@@ -24,14 +26,14 @@ public class InteractableEntity : MonoBehaviour
 
     void MarkAsDiscovered()
     {
-        if (!bDiscovered)
-        {
-            bDiscovered = true;
+        if (bDiscovered)
+            return;
 
-            //tell the manager this one is now discovered
-            if (InteractablesManager.Instance != null)
-                InteractablesManager.Instance.OnInteractableDiscovered(this);
-        }
+        bDiscovered = true;
+
+        // tell the manager this one is now discovered
+        if (InteractablesManager.Instance != null)
+            InteractablesManager.Instance.OnInteractableDiscovered(this);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -54,11 +56,14 @@ public class InteractableEntity : MonoBehaviour
         playerInside = false;
         player = null;
 
-        if (Overlay.Instance != null)
+        if (Overlay.Instance != null && Overlay.Instance.IsPopupVisible)
         {
-            //Overlay.Instance.HidePrompt();
-            this.MarkAsDiscovered();
             Overlay.Instance.HidePopup();
+        }
+
+        if (hasInteracted && !bDiscovered)
+        {
+            MarkAsDiscovered();
         }
     }
 
@@ -71,16 +76,19 @@ public class InteractableEntity : MonoBehaviour
 
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            if (Overlay.Instance.IsPopupVisible)
+            if (!Overlay.Instance.IsPopupVisible)
             {
-                this.MarkAsDiscovered();
-                Overlay.Instance.HidePopup();
-                //Overlay.Instance.ShowPrompt(promptText, transform.position + promptWorldOffset);
+                Overlay.Instance.ShowPopup(popupSprite);
+                hasInteracted = true;
             }
             else
             {
-                //Overlay.Instance.HidePrompt();
-                Overlay.Instance.ShowPopup(popupSprite);
+                Overlay.Instance.HidePopup();
+
+                if (hasInteracted && !bDiscovered)
+                {
+                    MarkAsDiscovered();
+                }
             }
         }
     }
