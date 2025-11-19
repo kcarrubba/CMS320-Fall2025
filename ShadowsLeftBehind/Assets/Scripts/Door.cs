@@ -85,22 +85,19 @@ public class Door : MonoBehaviour
         if (!playerInside)
             return;
 
-        if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
+        if (string.IsNullOrEmpty(targetScene))
         {
-            if (string.IsNullOrEmpty(targetScene))
-            {
-                Debug.LogWarning($"Door on '{name}' has no targetScene set.");
-                return;
-            }
-
-            if (GameManager.instance == null)
-            {
-                Debug.LogError("No GameManager.instance found for Door.");
-                return;
-            }
-
-            GameManager.instance.SwitchTo(targetScene, movePlayer, spawnId);
+            Debug.LogWarning($"Door on '{name}' has no targetScene set.");
+            return;
         }
+
+        if (GameManager.instance == null)
+        {
+            Debug.LogError("No GameManager.instance found for Door.");
+            return;
+        }
+
+        GameManager.instance.SwitchTo(targetScene, movePlayer, spawnId);
     }
 
     void OnTriggerEnter2D(Collider2D other)
