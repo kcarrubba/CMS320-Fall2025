@@ -32,8 +32,6 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
 
-        cam = Camera.main;
-
         var col = GetComponent<Collider2D>();
         if (col) halfSize = col.bounds.extents;
 
@@ -86,6 +84,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        cam = Camera.main;
+
         // Physics movement
         Vector2 target = rb.position + inputDir * moveSpeed * Time.fixedDeltaTime;
 
