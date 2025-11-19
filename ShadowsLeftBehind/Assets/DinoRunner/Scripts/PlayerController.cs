@@ -15,8 +15,8 @@ namespace DinoRunner {
 			public int typeId;
 		}
 
-		private float moveSpeed = 4.0f;
-		private float jumpHeight = 10.0f;
+		private float moveSpeed = 5.0f;
+		private float jumpHeight = 18.0f;
 
 		private const float AnimationFrameDuration = 0.1f;
 		private float spriteTimer = AnimationFrameDuration;
@@ -82,7 +82,7 @@ namespace DinoRunner {
 
 			groundY = ForcedGroundY; // enforce canonical ground height regardless of inspector overrides
 			if (lockGroundY) {
-				SnapToGroundY();
+				SnapToGroundY(forceSnap: true);
 			}
 
 			genomes = Utils.loadAllGenomes();
@@ -257,13 +257,19 @@ namespace DinoRunner {
 			}
 		}
 
-		private void SnapToGroundY() {
+		private void SnapToGroundY(bool forceSnap = false) {
+			float currentY = rb != null ? rb.position.y : transform.position.y;
+			float targetY = forceSnap ? groundY : Mathf.Max(groundY, currentY);
+			if (Mathf.Approximately(targetY, currentY)) {
+				return;
+			}
+
 			if (rb != null) {
-				rb.position = new Vector2(rb.position.x, groundY);
+				rb.position = new Vector2(rb.position.x, targetY);
 				transform.position = rb.position;
 			} else {
 				Vector2 pos = transform.position;
-				pos.y = groundY;
+				pos.y = targetY;
 				transform.position = pos;
 			}
 		}
