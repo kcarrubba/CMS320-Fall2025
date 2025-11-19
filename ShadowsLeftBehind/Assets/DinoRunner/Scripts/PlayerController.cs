@@ -251,6 +251,11 @@ namespace DinoRunner {
 				}				
 			} else if (coll.gameObject.name.StartsWith ("Ground")) {
 				isGrounded = true;
+				if (rb != null && rb.linearVelocity.y < 0f) {
+					Vector2 vel = rb.linearVelocity;
+					vel.y = 0f; // stop downward motion so physics doesn't push us visibly through the ground
+					rb.linearVelocity = vel;
+				}
 				if (lockGroundY) {
 					SnapToGroundY();
 				}
