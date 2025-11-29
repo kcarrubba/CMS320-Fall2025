@@ -49,7 +49,11 @@ public class Utils
 		return bestGenomes;
 	}
 
-	public static void persistInJson(Genome g, String path) {		
+	public static void persistInJson(Genome g, String path) {
+		//why...
+		return;
+
+
 		String filename = path + DateTime.Now.ToString("dd-MM-yy-HHmmss") + ".json";
 		if (File.Exists(filename))
 		{
