@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7d64682bd91a148aa98115d5731d8956
+guid: b8eb7dd059f4c654b9e9659ec66e03a6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1617400124195625425
-    second: book close up_0
+      213: 1717959649996741340
+    second: calendar_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: book close up_0
+      name: calendar_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 1024
-        height: 1024
+        height: 1536
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f26a5a90827dd89e0800000000000000
-      internalID: -1617400124195625425
+      spriteID: cda9284133b67d710800000000000000
+      internalID: 1717959649996741340
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      book close up_0: -1617400124195625425
+      calendar_0: 1717959649996741340
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

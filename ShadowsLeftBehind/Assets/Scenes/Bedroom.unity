@@ -1005,7 +1005,7 @@ PrefabInstance:
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupSprite
       value: 
-      objectReference: {fileID: 1717959649996741340, guid: 2671904c060ea47c78a7e2f6effc730b, type: 3}
+      objectReference: {fileID: 1717959649996741340, guid: b8eb7dd059f4c654b9e9659ec66e03a6, type: 3}
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupWorldOffset.x
       value: 1
@@ -1110,7 +1110,7 @@ PrefabInstance:
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupSprite
       value: 
-      objectReference: {fileID: -2661080757978602275, guid: 0f0a78615820a4ffa8c1d4767b89f9b5, type: 3}
+      objectReference: {fileID: -2661080757978602275, guid: 2a1c3ac7f3858e74eb366f2de2522986, type: 3}
     - target: {fileID: 464017636002813208, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.61
@@ -1171,7 +1171,7 @@ PrefabInstance:
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupSprite
       value: 
-      objectReference: {fileID: 3843231544584785974, guid: 142274faaf17f4d5a9388fd9a4ee3c89, type: 3}
+      objectReference: {fileID: 3843231544584785974, guid: 34348e33c268ad04da44ce418a451fd6, type: 3}
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupWorldOffset.x
       value: 6.5

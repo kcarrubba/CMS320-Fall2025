@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5993e51a312954aa696232df031b7026
+guid: 2a1c3ac7f3858e74eb366f2de2522986
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7739319571045547003
-    second: clock close up_0
+      213: -2661080757978602275
+    second: music box_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: clock close up_0
+      name: music box_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bfbf56b2526976b60800000000000000
-      internalID: 7739319571045547003
+      spriteID: dd4ee0e4621f11bd0800000000000000
+      internalID: -2661080757978602275
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      clock close up_0: 7739319571045547003
+      music box_0: -2661080757978602275
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
