@@ -101,7 +101,7 @@ namespace DinoRunner {
 				spriteRenderer.sprite = currentAnimationFrames[0];
 			}
 
-			GetComponent<BoxCollider2D> ().enabled = false;
+			//GetComponent<BoxCollider2D> ().enabled = false;
 
 			isLearning = true;   // always manual control for now
 			if (!isLearning && Utils.actualGenome >= genomes.Count) {

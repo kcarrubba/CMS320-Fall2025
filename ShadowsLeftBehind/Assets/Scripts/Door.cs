@@ -8,6 +8,7 @@ public class Door : MonoBehaviour
     [SerializeField] string targetScene;
     [SerializeField] string spawnId = "default";
     [SerializeField] bool movePlayer = true;
+    [SerializeField] bool bAlwaysUnlocked = false;
 
     [Header("Visuals")]
     [SerializeField] SpriteRenderer doorSprite;
@@ -21,6 +22,7 @@ public class Door : MonoBehaviour
 
     bool playerInside;
     bool isUnlocked = false;
+    bool hasSwitched = false;
     float glowT;
 
     private void Awake()
@@ -59,8 +61,8 @@ public class Door : MonoBehaviour
         // Unlock logic
         if (!isUnlocked)
         {
-            if (InteractablesManager.Instance != null &&
-                InteractablesManager.Instance.AllCluesFoundInScene)
+            if ((InteractablesManager.Instance != null && InteractablesManager.Instance.AllCluesFoundInScene)
+                || bAlwaysUnlocked)
             {
                 SetUnlocked(true);
             }
@@ -82,7 +84,7 @@ public class Door : MonoBehaviour
             doorSprite.color = c;
         }
 
-        if (!playerInside)
+        if (!playerInside || hasSwitched)
             return;
 
         if (string.IsNullOrEmpty(targetScene))
@@ -97,22 +99,30 @@ public class Door : MonoBehaviour
             return;
         }
 
+        hasSwitched = true;
+        Debug.Log($"Switching Scene to '{targetScene}' (spawnId = {spawnId})");
         GameManager.instance.SwitchTo(targetScene, movePlayer, spawnId);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log($"Door trigger enter with {other.name}, tag={other.tag}");
+
         if (!other.CompareTag("player"))
             return;
 
+        Debug.Log("Player entered door trigger!");
         playerInside = true;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
+        Debug.Log($"Door trigger exit with {other.name}, tag={other.tag}");
+
         if (!other.CompareTag("player"))
             return;
 
+        Debug.Log("Player exited door trigger!");
         playerInside = false;
     }
 }

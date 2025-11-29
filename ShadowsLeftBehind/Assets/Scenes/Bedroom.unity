@@ -479,6 +479,7 @@ MonoBehaviour:
   targetScene: Level 1
   spawnId: default
   movePlayer: 0
+  bAlwaysUnlocked: 0
   doorSprite: {fileID: 420781366}
   triggerCollider: {fileID: 0}
   useGlow: 1
@@ -1331,7 +1332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3278576074088747003, guid: 26c0001ef6cd0904d8756313416e97d7, type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3482068462922480425, guid: 26c0001ef6cd0904d8756313416e97d7, type: 3}
       propertyPath: m_LocalScale.x
