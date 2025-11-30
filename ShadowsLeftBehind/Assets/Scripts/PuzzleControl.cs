@@ -63,6 +63,10 @@ public class PuzzleControl : MonoBehaviour
             _timeLeft -= Time.deltaTime;
             if (_timeLeft <= 0f)
             {
+                //if lose, next scene is in dark
+                if (GameManager.instance)
+                    GameManager.instance.isNextRoomDark = true;
+
                 _timeLeft = 0f;
                 timeUp = true;               
                 _timerRunning = false;
@@ -111,7 +115,12 @@ public class PuzzleControl : MonoBehaviour
             pictures[32].rotation.z == 0 &&
             pictures[33].rotation.z == 0 &&
             pictures[34].rotation.z == 0
-        ) {
+        ) 
+        {
+            //if win, next scene is in light
+            if (GameManager.instance)
+                GameManager.instance.isNextRoomDark = false;
+
             youWin = true;
             WinText.SetActive(true);
 
@@ -132,18 +141,19 @@ public class PuzzleControl : MonoBehaviour
         TimerText.text = $"{m:00}:{s:00}";
     }
 
-    public void ClickNext()
-    {
-        int idx = SceneManager.GetActiveScene().buildIndex;
-        int total = SceneManager.sceneCountInBuildSettings;
-        if (idx + 1 < total)
-        {
-            SceneManager.LoadScene(idx + 1);
-        }
-        else
-        {
-            // If there is no “next” scene, reload current (or handle however you like)
-            SceneManager.LoadScene(idx);
-        }
-    }
+    //I dont think we should use this
+    //public void ClickNext()
+    //{
+    //    int idx = SceneManager.GetActiveScene().buildIndex;
+    //    int total = SceneManager.sceneCountInBuildSettings;
+    //    if (idx + 1 < total)
+    //    {
+    //        SceneManager.LoadScene(idx + 1);
+    //    }
+    //    else
+    //    {
+    //        // If there is no “next” scene, reload current (or handle however you like)
+    //        SceneManager.LoadScene(idx);
+    //    }
+    //}
 }
