@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        yield return LoadAndActivate("MainMenu");
+        yield return LoadAndActivate("Kitchen");
     }
 
     public void SwitchTo(string sceneName, bool movePlayer = true, string spawnId = "default")
