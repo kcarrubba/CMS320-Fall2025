@@ -141,6 +141,6 @@ public class FlameManager : MonoBehaviour
         }
     }
 
-    //public float GetTimeRemaining() => timeRemaining;
-    //public int GetActiveFlameCount() => activeFlames;
+    public float GetTimeRemaining() => timeRemaining;
+    public int GetActiveFlameCount() => activeFlames;
 }
