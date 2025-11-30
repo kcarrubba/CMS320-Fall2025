@@ -16,6 +16,11 @@ public class FlameManager : MonoBehaviour
     [Header("Spawn Area")]
     [SerializeField] private BoxCollider2D spawnArea;
 
+    [Header("End of Round")]
+    [SerializeField] private ScreenFader screenFader;
+    [SerializeField] private string winState;
+    [SerializeField] private string loseState;
+
     public Action OnRoundWin;
     public Action OnRoundFail;
 
@@ -113,8 +118,15 @@ public class FlameManager : MonoBehaviour
 
         roundRunning = false;
 
-        Debug.Log("Won the fire game");
+        Debug.Log("FlameManager: Round won!");
         OnRoundWin?.Invoke();
+
+        ClearExistingFlames();
+
+        if (screenFader != null)
+            screenFader.FadeToBlackAndSwitch(winState);
+        else
+            GameManager.instance.SwitchTo(winState);
     }
 
     private void HandleRoundFail()
@@ -124,8 +136,15 @@ public class FlameManager : MonoBehaviour
 
         roundRunning = false;
 
-        Debug.Log("Lost the fire game");
+        Debug.Log("FlameManager: Round failed!");
         OnRoundFail?.Invoke();
+
+        ClearExistingFlames();
+
+        if (screenFader != null)
+            screenFader.FadeToBlackAndSwitch(loseState);
+        else
+            GameManager.instance.SwitchTo(loseState);
     }
 
     private void ClearExistingFlames()
