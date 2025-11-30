@@ -123,10 +123,10 @@ public class FlameManager : MonoBehaviour
 
         ClearExistingFlames();
 
+        GameManager.instance.isNextRoomDark = false;
+
         if (screenFader != null)
             screenFader.FadeToBlackAndSwitch(winState);
-        else
-            GameManager.instance.SwitchTo(winState);
     }
 
     private void HandleRoundFail()
@@ -141,10 +141,10 @@ public class FlameManager : MonoBehaviour
 
         ClearExistingFlames();
 
+        GameManager.instance.isNextRoomDark = true;
+
         if (screenFader != null)
             screenFader.FadeToBlackAndSwitch(loseState);
-        else
-            GameManager.instance.SwitchTo(loseState);
     }
 
     private void ClearExistingFlames()

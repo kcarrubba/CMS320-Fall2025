@@ -7,6 +7,7 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public bool isNextRoomDark = false;
 
     [SerializeField] GameObject playerPrefab;
 
@@ -73,7 +74,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        yield return LoadAndActivate("MainMenu");
+        yield return LoadAndActivate("FireGame");
     }
 
     public void SwitchTo(string sceneName, bool movePlayer = true, string spawnId = "default")
