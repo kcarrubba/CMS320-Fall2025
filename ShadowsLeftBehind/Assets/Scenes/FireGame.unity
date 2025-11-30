@@ -1161,8 +1161,7 @@ MonoBehaviour:
   roundDuration: 60
   spawnArea: {fileID: 1999274041}
   screenFader: {fileID: 1370343946}
-  winState: Attic
-  loseState: Attic
+  nextSceneName: Attic
 --- !u!4 &1999274043
 Transform:
   m_ObjectHideFlags: 0

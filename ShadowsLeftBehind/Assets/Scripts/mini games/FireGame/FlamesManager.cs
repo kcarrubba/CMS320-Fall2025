@@ -18,8 +18,7 @@ public class FlameManager : MonoBehaviour
 
     [Header("End of Round")]
     [SerializeField] private ScreenFader screenFader;
-    [SerializeField] private string winState;
-    [SerializeField] private string loseState;
+    [SerializeField] private string nextSceneName;
 
     public Action OnRoundWin;
     public Action OnRoundFail;
@@ -126,7 +125,7 @@ public class FlameManager : MonoBehaviour
         GameManager.instance.isNextRoomDark = false;
 
         if (screenFader != null)
-            screenFader.FadeToBlackAndSwitch(winState);
+            screenFader.FadeToBlackAndSwitch(nextSceneName);
     }
 
     private void HandleRoundFail()
@@ -144,7 +143,7 @@ public class FlameManager : MonoBehaviour
         GameManager.instance.isNextRoomDark = true;
 
         if (screenFader != null)
-            screenFader.FadeToBlackAndSwitch(loseState);
+            screenFader.FadeToBlackAndSwitch(nextSceneName);
     }
 
     private void ClearExistingFlames()
