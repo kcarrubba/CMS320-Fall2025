@@ -6,6 +6,7 @@ public class SceneButton : MonoBehaviour
 
     public void LoadScene()
     {
+        Debug.Log("moving to scene");
         GameManager.instance.SwitchTo(targetScene, movePlayer);
     }
 }

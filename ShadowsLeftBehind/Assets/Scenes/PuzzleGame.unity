@@ -652,9 +652,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: d3b218e4d4b37c4448ce5980ff108650, type: 3}
-        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
-        m_MethodName: 
+      - m_Target: {fileID: 259288312}
+        m_TargetAssemblyTypeName: SceneButton, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3097,7 +3097,7 @@ MonoBehaviour:
   WinText: {fileID: 288402482}
   LoseText: {fileID: 1341706176}
   TimerText: {fileID: 941083749}
-  timeLimitSeconds: 5
+  timeLimitSeconds: 60
   IntroText: {fileID: 1670096658}
   introDurationSeconds: 20
   NextButton: {fileID: 259288307}
