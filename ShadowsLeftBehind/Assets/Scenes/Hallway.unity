@@ -173,11 +173,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3942812917209003137, guid: 64ffe7fa404f2614ab3fe7b9103623c3, type: 3}
       propertyPath: movePlayer
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3942812917209003137, guid: 64ffe7fa404f2614ab3fe7b9103623c3, type: 3}
       propertyPath: targetScene
-      value: Bedroom
+      value: PuzzleGame
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
