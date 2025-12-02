@@ -16,6 +16,10 @@ public class FlameManager : MonoBehaviour
     [Header("Spawn Area")]
     [SerializeField] private BoxCollider2D spawnArea;
 
+    [Header("First Flame Spawn")]
+    [Tooltip("Optional: Where the FIRST flame of the round should spawn. If null, all flames are random.")]
+    [SerializeField] private Transform firstFlameSpawnPoint;
+
     [Header("End of Round")]
     [SerializeField] private ScreenFader screenFader;
     [SerializeField] private string nextSceneName;
@@ -27,6 +31,9 @@ public class FlameManager : MonoBehaviour
     private float spawnTimer;
     private int activeFlames;
     private bool roundRunning;
+
+    // Tracks whether we've already used the special first-flame spawn
+    private bool firstFlameSpawned;
 
     private void Start()
     {
@@ -42,6 +49,7 @@ public class FlameManager : MonoBehaviour
         spawnTimer = 0f;
         activeFlames = 0;
         roundRunning = true;
+        firstFlameSpawned = false;   // reset at the start of every round
 
         ClearExistingFlames();
 
@@ -86,7 +94,19 @@ public class FlameManager : MonoBehaviour
         if (flamePrefab == null)
             return;
 
-        Vector2 spawnPos = GetRandomPointInArea();
+        Vector2 spawnPos;
+
+        // Use the special first-flame position ONCE per round, if provided
+        if (!firstFlameSpawned && firstFlameSpawnPoint != null)
+        {
+            spawnPos = firstFlameSpawnPoint.position;
+            firstFlameSpawned = true;
+        }
+        else
+        {
+            spawnPos = GetRandomPointInArea();
+        }
+
         GameObject flameObj = Instantiate(flamePrefab, spawnPos, Quaternion.identity);
 
         Flame flame = flameObj.GetComponent<Flame>();
