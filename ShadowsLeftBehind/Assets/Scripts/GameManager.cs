@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        yield return LoadAndActivate("FireGame");
+        yield return LoadAndActivate("MainMenu");
     }
 
     public void SwitchTo(string sceneName, bool movePlayer = true, string spawnId = "default")

@@ -30,7 +30,10 @@ public class FlameManager : MonoBehaviour
 
     private void Start()
     {
-        BeginRound();
+        if (gameObject.scene == SceneManager.GetActiveScene())
+        {
+            BeginRound();
+        }
     }
 
     public void BeginRound()
