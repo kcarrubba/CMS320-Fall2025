@@ -1,25 +1,25 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float fireGameMoveSpeed = 10f;
 
     [Header("Animator")]
-    public Animator animator;                 // Controller should have a Blend Tree state named in walkStateName
-    [SerializeField] string walkStateName = "Walk"; // <-- exact name of your Walk Blend Tree state
+    public Animator animator;
+    [SerializeField] string walkStateName = "Walk";
 
     Rigidbody2D rb;
     Camera cam;
     Vector2 halfSize;
 
-    // Input / facing
     Vector2 inputDir;
-    Vector2 lastMoveDir = Vector2.down;       // default facing
+    Vector2 lastMoveDir = Vector2.down;
     bool isMoving;
 
-    // Animator parameter hashes (optional but safer)
     static readonly int HashMoveX = Animator.StringToHash("MoveX");
     static readonly int HashMoveY = Animator.StringToHash("MoveY");
     bool hasMoveX, hasMoveY;
@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
         var col = GetComponent<Collider2D>();
         if (col) halfSize = col.bounds.extents;
 
-        // Cache which params exist to avoid warnings if names differ
         if (animator)
         {
             foreach (var p in animator.parameters)
@@ -48,7 +47,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // --- Read WASD (new Input System) ---
         inputDir = Vector2.zero;
         var kb = Keyboard.current;
         if (kb != null)
@@ -59,11 +57,9 @@ public class PlayerController : MonoBehaviour
         inputDir = inputDir.normalized;
         isMoving = inputDir.sqrMagnitude > 0.0001f;
 
-        // Snap to a single cardinal so the 4-way tree doesn't flicker on diagonals
         Vector2 snapped = isMoving ? SnapToCardinal(inputDir) : lastMoveDir;
         if (isMoving) lastMoveDir = snapped;
 
-        // Animator driving (single Walk tree + freeze on first frame when idle)
         if (animator)
         {
             if (hasMoveX) animator.SetFloat(HashMoveX, snapped.x);
@@ -86,8 +82,13 @@ public class PlayerController : MonoBehaviour
     {
         cam = Camera.main;
 
-        // Physics movement
-        Vector2 target = rb.position + inputDir * moveSpeed * Time.fixedDeltaTime;
+        var scene = SceneManager.GetActiveScene();
+        float speed = moveSpeed;
+
+        if (scene.name == "FireGame")
+            speed = this.fireGameMoveSpeed;
+
+        Vector2 target = rb.position + inputDir * speed * Time.fixedDeltaTime;
 
         if (cam)
         {
@@ -101,7 +102,6 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(target);
     }
 
-    // Public so GameManager (or others) can set facing explicitly
     public void Face(Vector2 dir)
     {
         if (dir == Vector2.zero) return;
@@ -120,7 +120,6 @@ public class PlayerController : MonoBehaviour
             sr.flipX = lastMoveDir.x < 0f;
     }
 
-    // Helpers
     static Vector2 SnapToCardinal(Vector2 v)
     {
         if (v == Vector2.zero) return Vector2.zero;
