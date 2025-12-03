@@ -1295,7 +1295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3942812917209003137, guid: 64ffe7fa404f2614ab3fe7b9103623c3, type: 3}
       propertyPath: movePlayer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3942812917209003137, guid: 64ffe7fa404f2614ab3fe7b9103623c3, type: 3}
       propertyPath: targetScene

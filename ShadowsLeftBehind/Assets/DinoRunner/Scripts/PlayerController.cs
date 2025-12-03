@@ -52,6 +52,11 @@ namespace DinoRunner {
 		private String genomeBasePath = "Genomes/genome_";
 
 		[SerializeField]
+		private string failSceneName = "Hallway";
+
+		private bool hasTriggeredFailScene = false;
+
+		[SerializeField]
 		private List<Cactus> cactus = new List<Cactus> ();
 
 		[SerializeField]
@@ -231,7 +236,7 @@ namespace DinoRunner {
 
 		// Called when a collision happens
 		void OnCollisionEnter2D(Collision2D coll) {
-			if (coll.gameObject.CompareTag("cactus")) {			
+			if (coll.gameObject.CompareTag("cactus")) {		
 				GameObject.Find ("Canvas").GetComponent<Canvas> ().enabled = true;
 				Time.timeScale = 0;
 
@@ -248,7 +253,9 @@ namespace DinoRunner {
 					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 					Time.timeScale = 1;
 					Utils.actualGenome++;
-				}				
+				} else {
+					TransitionToFailScene();
+				}
 			} else if (coll.gameObject.name.StartsWith ("Ground")) {
 				isGrounded = true;
 				if (rb != null && rb.linearVelocity.y < 0f) {
@@ -392,6 +399,16 @@ namespace DinoRunner {
 
 				actualJumpGenome++;
 			}
+		}
+
+		private void TransitionToFailScene() {
+			if (hasTriggeredFailScene || string.IsNullOrEmpty(failSceneName)) {
+				return;
+			}
+
+			hasTriggeredFailScene = true;
+			Time.timeScale = 1f;
+			SceneManager.LoadScene(failSceneName);
 		}
 	}
 }
