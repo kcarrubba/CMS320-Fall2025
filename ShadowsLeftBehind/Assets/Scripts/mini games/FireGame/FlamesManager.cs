@@ -37,10 +37,8 @@ public class FlameManager : MonoBehaviour
 
     private void Start()
     {
-        if (gameObject.scene == SceneManager.GetActiveScene())
-        {
-            BeginRound();
-        }
+        Debug.Log("Starting fireGame roundd!");
+        BeginRound();
     }
 
     public void BeginRound()
