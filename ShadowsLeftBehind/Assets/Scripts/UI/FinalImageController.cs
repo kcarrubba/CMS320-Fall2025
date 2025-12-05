@@ -46,5 +46,6 @@ public class FinalImageController : MonoBehaviour
     private void GoToMainMenu()
     {
         GameManager.instance.SwitchTo(mainMenuSceneName);
+        Overlay.Instance.ShowIntroImage();
     }
 }
