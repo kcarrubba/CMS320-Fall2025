@@ -152,5 +152,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundImageController
   backgroundImage: {fileID: 8323090010974094975}
-  lightTexture: {fileID: 2800000, guid: bf7aa3407215b4ad7a9b774c2ac9c20c, type: 3}
-  darkTexture: {fileID: 2800000, guid: 06e23e619c6c84e1abe722c2871f934c, type: 3}
+  lightTexture: {fileID: 2800000, guid: 607aefd865b4a42829c1b842f01c55cb, type: 3}
+  darkTexture: {fileID: 2800000, guid: 1e367f42503444671b804382298755ba, type: 3}
