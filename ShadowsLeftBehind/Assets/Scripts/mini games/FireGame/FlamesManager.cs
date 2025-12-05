@@ -37,10 +37,8 @@ public class FlameManager : MonoBehaviour
 
     private void Start()
     {
-        if (gameObject.scene == SceneManager.GetActiveScene())
-        {
-            BeginRound();
-        }
+        Debug.Log("Starting fireGame roundd!");
+        BeginRound();
     }
 
     public void BeginRound()
@@ -50,8 +48,6 @@ public class FlameManager : MonoBehaviour
         activeFlames = 0;
         roundRunning = true;
         firstFlameSpawned = false;   // reset at the start of every round
-
-        ClearExistingFlames();
 
         for (int i = 0; i < startingFlames; i++)
             SpawnFlame();

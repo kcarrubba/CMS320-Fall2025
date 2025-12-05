@@ -408,7 +408,8 @@ namespace DinoRunner {
 
 			hasTriggeredFailScene = true;
 			Time.timeScale = 1f;
-			SceneManager.LoadScene(failSceneName);
+			GameManager.instance.isNextRoomDark = true;
+			GameManager.instance.SwitchTo("Hallway");
 		}
 	}
 }
