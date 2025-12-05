@@ -3097,7 +3097,7 @@ MonoBehaviour:
   WinText: {fileID: 288402482}
   LoseText: {fileID: 1341706176}
   TimerText: {fileID: 941083749}
-  timeLimitSeconds: 60
+  timeLimitSeconds: 75
   IntroText: {fileID: 1670096658}
   introDurationSeconds: 20
   NextButton: {fileID: 259288307}
