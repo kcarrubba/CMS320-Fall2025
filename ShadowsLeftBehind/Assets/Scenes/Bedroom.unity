@@ -849,7 +849,7 @@ PrefabInstance:
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupSprite
       value: 
-      objectReference: {fileID: 1717959649996741340, guid: b8eb7dd059f4c654b9e9659ec66e03a6, type: 3}
+      objectReference: {fileID: 8592416264655507707, guid: ab70d7c33a18240a1a7e25f8fb701358, type: 3}
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupWorldOffset.x
       value: 1

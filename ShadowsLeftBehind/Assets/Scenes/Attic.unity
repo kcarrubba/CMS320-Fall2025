@@ -657,7 +657,7 @@ PrefabInstance:
     - target: {fileID: -6213424571304838213, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: popupSprite
       value: 
-      objectReference: {fileID: 7813118643288991073, guid: b0585c3d2b923462f84744c6615f6093, type: 3}
+      objectReference: {fileID: 8077223606329862377, guid: 226440b7af87047a18b6905249c602f1, type: 3}
     - target: {fileID: 464017636002813208, guid: 72ec16ee3dbdb3c438627aaaf61c4954, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.61
