@@ -106,21 +106,7 @@ public class Overlay : MonoBehaviour
         UpdatePromptPosition(worldPos);
     }
 
-    public void ShowIntroImage()
-    {
-        if (introImage == null)
-            return;
-
-        introImage.gameObject.SetActive(true);
-
-        if (introCanvasGroup != null)
-        {
-            introCanvasGroup.alpha = 0f;
-            StartIntroFade(1f);
-        }
-    }
-
-    public void IntroImage()
+    public void HideIntroImage()
     {
         if (introImage == null)
             return;

@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        yield return LoadAndActivate("Attic");
+        yield return LoadAndActivate("MainMenu");
     }
 
     public void SwitchTo(string sceneName, bool movePlayer = true, string spawnId = "default")
