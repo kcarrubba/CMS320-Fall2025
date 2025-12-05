@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float fireGameMoveSpeed = 10f;
+    [SerializeField] float fireGameMoveSpeed = 7f;
 
     [Header("Animator")]
     public Animator animator;
