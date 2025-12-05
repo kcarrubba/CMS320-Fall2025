@@ -39,6 +39,7 @@ The goal of the game is to **collect all glowing clues** and **complete each Que
 ### Controls:
 
 - **Player movement:** A / W / S / D  
-- **Collect Clue / Interact:** E  
+- **Collect Clue / Interact:** E
+- **Solve Puzzle:** Mouse click
 
-*(Keyboard-based; no mouse or joystick required.)*  
+*(Keyboard-based; no joystick required.)*  
