@@ -1130,7 +1130,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -1.6, y: -1.5}
+  m_Offset: {x: -1.6, y: -1.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1155,9 +1155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   flamePrefab: {fileID: 2107370967576291808, guid: 8306342d1d07aeb4397876b40fc0ede5, type: 3}
-  startingFlames: 3
+  startingFlames: 1
   maxActiveFlamesBeforeFail: 10
-  spawnInterval: 2
+  spawnInterval: 1.5
   roundDuration: 60
   spawnArea: {fileID: 1999274041}
   firstFlameSpawnPoint: {fileID: 2122051846}
