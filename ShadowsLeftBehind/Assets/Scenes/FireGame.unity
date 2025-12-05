@@ -1393,7 +1393,7 @@ MonoBehaviour:
   flamePrefab: {fileID: 2107370967576291808, guid: 8306342d1d07aeb4397876b40fc0ede5, type: 3}
   startingFlames: 0
   maxActiveFlamesBeforeFail: 10
-  spawnInterval: 1.3
+  spawnInterval: 0.5
   roundDuration: 60
   spawnArea: {fileID: 1999274041}
   firstFlameSpawnPoint: {fileID: 2122051846}
