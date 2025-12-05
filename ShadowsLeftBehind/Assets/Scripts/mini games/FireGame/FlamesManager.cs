@@ -49,8 +49,6 @@ public class FlameManager : MonoBehaviour
         roundRunning = true;
         firstFlameSpawned = false;   // reset at the start of every round
 
-        ClearExistingFlames();
-
         for (int i = 0; i < startingFlames; i++)
             SpawnFlame();
     }
