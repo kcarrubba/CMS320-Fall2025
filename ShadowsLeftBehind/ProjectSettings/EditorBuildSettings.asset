@@ -6,8 +6,32 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/GameManager.unity
+    guid: c2d75b33d26746f468e7255f21f787f1
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Bedroom.unity
+    guid: bbd620f48036488418049b24b5e65f63
+  - enabled: 1
+    path: Assets/DinoRunner/Levels/Level 1.unity
+    guid: d7bbbd5b0087f83438c8232b3e259fdc
+  - enabled: 1
+    path: Assets/Scenes/Hallway.unity
+    guid: 3f5e34e009e01410a8c9c6ee4301d930
+  - enabled: 1
+    path: Assets/Scenes/PuzzleGame.unity
+    guid: 1143803cbc329489287ff03122e4eca4
+  - enabled: 1
+    path: Assets/Scenes/Kitchen.unity
+    guid: 13dd77ab52bfceb48a82764825b19915
+  - enabled: 1
+    path: Assets/Scenes/FireGame.unity
+    guid: 8e84a4358abd93747ad597b3f46e3584
+  - enabled: 1
+    path: Assets/Scenes/Attic.unity
+    guid: 02412a17af66c3c4c8d90668b162ea2a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
