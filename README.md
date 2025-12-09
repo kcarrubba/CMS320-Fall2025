@@ -43,3 +43,11 @@ The goal of the game is to **collect all glowing clues** and **complete each Que
 - **Solve Puzzle:** Mouse click
 
 *(Keyboard-based; no joystick required.)*  
+
+---
+
+### Play Our Game!
+
+Shadows Left Behind is now on **itch.io**!
+
+https://kcarrubba.itch.io/shadows-left-behind
